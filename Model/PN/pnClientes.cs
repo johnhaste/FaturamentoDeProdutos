@@ -24,6 +24,21 @@ namespace Model.PN
                 throw;
             }
         }
-        
+
+        //Retorna Clientes por Nome
+        public static List<Cliente> RetornaClientesPorNome(String textoBuscado)
+        {
+
+            try
+            {
+                return RetornaClientes().Where(x => x.Nome.IndexOf(textoBuscado, StringComparison.OrdinalIgnoreCase) >= 0 || x.Nome.IndexOf(textoBuscado, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
+
     }
 }

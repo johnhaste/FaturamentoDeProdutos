@@ -282,6 +282,7 @@
     <Content Include="Views\DetalhesPedido\Details.cshtml" />
     <Content Include="Views\DetalhesPedido\Edit.cshtml" />
     <Content Include="Views\DetalhesPedido\Index.cshtml" />
+    <Content Include="Views\Clientes\BuscarClientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

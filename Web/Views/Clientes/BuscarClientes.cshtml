@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Model.DAO.Cliente>
+
+@{
+    ViewBag.Title = "BuscarClientes";
+}
+
+<h2>Buscar Clientes</h2>
+
+
+@using (Html.BeginForm("BuscarClientes", "Clientes", FormMethod.Get))
+{
+    <p>
+        Nome do Cliente: @Html.TextBox("textoBuscado")
+        <input class="btn-primary" type="submit" value="Buscar" />
+    </p>
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Endereco.Rua)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Endereco.Rua)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ClienteID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ClienteID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ClienteID })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -7,12 +7,29 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Model.DAO;
+using Model.PN;
 
 namespace Web.Controllers
 {
     public class ClientesController : Controller
     {
         private Entities db = new Entities();
+
+        //GET: Buscando clientes por nome
+        public ActionResult BuscarClientes(string textoBuscado)
+        {
+
+       
+            //Verifica se um texto foi buscado
+            if (!String.IsNullOrEmpty(textoBuscado))
+            {
+                return View(pnClientes.RetornaClientesPorNome(textoBuscado));
+            }
+            
+            //Se não retorna todos os clientes
+            return View(pnClientes.RetornaClientes());
+
+        }
 
         // GET: Clientes
         public ActionResult Index()
