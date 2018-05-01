@@ -24,5 +24,20 @@ namespace Model.PN
                 throw;
             }
         }
+
+        public static List<Pedido> RetornaPedidosDoCliente(Guid clienteID)
+        {
+
+            try
+            {
+                return RetornaPedidos().Where(x => x.ClienteID == clienteID ).ToList();
+           
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
     }
 }

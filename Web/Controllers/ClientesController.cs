@@ -39,9 +39,7 @@ namespace Web.Controllers
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             IPagedList<Cliente> clientes;
-
             
-
             //Verifica se um texto foi buscado
             if (!String.IsNullOrEmpty(textoBuscado))
             {

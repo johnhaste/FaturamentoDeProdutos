@@ -62,6 +62,7 @@
                 @Html.DisplayFor(modelItem => item.Endereco.Rua)
             </td>
             <td>
+                <a href="@Url.Action("Index", "Pedidos", new { clienteID = item.ClienteID })" class="btn btn-primary">Pedidos &nbsp;<span class="glyphicon glyphicon-gift"></span></a>|
                 @Html.ActionLink("Edit", "Edit", new { id = item.ClienteID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ClienteID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.ClienteID })

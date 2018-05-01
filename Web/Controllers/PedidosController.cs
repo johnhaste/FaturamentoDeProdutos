@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Model.DAO;
+using Model.PN;
+using PagedList;
 
 namespace Web.Controllers
 {
@@ -14,11 +16,34 @@ namespace Web.Controllers
     {
         private Entities db = new Entities();
 
+        /*
         // GET: Pedidos
         public ActionResult Index()
         {
             var pedidos = db.Pedidos.Include(p => p.Cliente).Include(p => p.DetalhesPedido);
             return View(pedidos.ToList());
+        }
+        */
+
+        //Clientes e busca
+        public ActionResult Index(int? page, Guid clienteID)
+        {
+            int pageSize = 5;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+
+            IPagedList<Pedido> pedidos;
+
+            //Verifica se um texto foi buscado
+            if (!String.IsNullOrEmpty(clienteID.ToString()))
+            {
+                pedidos = pnPedidos.RetornaPedidosDoCliente(clienteID).ToPagedList(pageIndex, pageSize);
+                return View(pedidos);
+            }
+
+            pedidos = pnPedidos.RetornaPedidos().ToPagedList(pageIndex, pageSize);
+            return View(pedidos);
+
         }
 
         // GET: Pedidos/Details/5
