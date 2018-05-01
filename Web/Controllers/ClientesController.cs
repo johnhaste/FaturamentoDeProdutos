@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Model.DAO;
 using Model.PN;
+using PagedList;
 
 namespace Web.Controllers
 {
@@ -31,11 +32,14 @@ namespace Web.Controllers
 
         }
 
-        // GET: Clientes
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var clientes = db.Clientes.Include(c => c.Endereco);
-            return View(clientes.ToList());
+            int pageSize = 5;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            IPagedList<Cliente> clientes = pnClientes.RetornaClientes().ToPagedList(pageIndex, pageSize);
+
+            return View(clientes);
         }
 
         // GET: Clientes/Details/5
