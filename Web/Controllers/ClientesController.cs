@@ -32,14 +32,24 @@ namespace Web.Controllers
 
         }
 
-        public ActionResult Index(int? page)
+        //Clientes e busca
+        public ActionResult Index(int? page, string textoBuscado)
         {
             int pageSize = 5;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-            IPagedList<Cliente> clientes = pnClientes.RetornaClientes().ToPagedList(pageIndex, pageSize);
+            IPagedList<Cliente> clientes;
 
+            //Verifica se um texto foi buscado
+            if (!String.IsNullOrEmpty(textoBuscado))
+            {
+                clientes = pnClientes.RetornaClientesPorNome(textoBuscado).ToPagedList(pageIndex, pageSize);
+                return View(clientes);
+            }
+
+            clientes = pnClientes.RetornaClientesPorNome("").ToPagedList(pageIndex, pageSize);
             return View(clientes);
+
         }
 
         // GET: Clientes/Details/5
