@@ -118,13 +118,6 @@
     <Folder Include="VM\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="aspnet-Web-20180426110751.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="aspnet-Web-20180426110751_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>aspnet-Web-20180426110751.mdf</DependentUpon>
-    </Content>
     <Content Include="DAO\FaturamentoDeProdutos.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FaturamentoDeProdutos.Context.cs</LastGenOutput>
