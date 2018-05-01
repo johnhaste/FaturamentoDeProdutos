@@ -33,18 +33,28 @@ namespace Web.Controllers
         }
 
         //Clientes e busca
-        public ActionResult Index(int? page, string textoBuscado)
+        public ActionResult Index(int? page, string textoBuscado, string metodo)
         {
             int pageSize = 5;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             IPagedList<Cliente> clientes;
 
+            
+
             //Verifica se um texto foi buscado
             if (!String.IsNullOrEmpty(textoBuscado))
             {
-                clientes = pnClientes.RetornaClientesPorNome(textoBuscado).ToPagedList(pageIndex, pageSize);
-                return View(clientes);
+                if (metodo.Equals("inicial"))
+                {
+                    clientes = pnClientes.RetornaClientesPorInicial(textoBuscado).ToPagedList(pageIndex, pageSize);
+                    return View(clientes);
+                }
+                else {
+                    clientes = pnClientes.RetornaClientesPorNome(textoBuscado).ToPagedList(pageIndex, pageSize);
+                    return View(clientes);
+                }
+                
             }
 
             clientes = pnClientes.RetornaClientesPorNome("").ToPagedList(pageIndex, pageSize);

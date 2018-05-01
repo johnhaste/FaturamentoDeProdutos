@@ -40,5 +40,20 @@ namespace Model.PN
             
         }
 
+        public static List<Cliente> RetornaClientesPorInicial(String letraInicial)
+        {
+
+            try
+            {
+                return RetornaClientes().Where(x => x.Nome.Substring(0,1).Equals(letraInicial)).ToList();
+                
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+    
     }
 }
