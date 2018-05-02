@@ -19,6 +19,8 @@ namespace Web.Controllers
         // GET: DetalhesPedido
         public ActionResult Index(int? page, int numeroPedido)
         {
+            ViewBag.Total = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido).Sum(x => x.Preco);
+
             int pageSize = 5;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
