@@ -43,7 +43,7 @@ namespace Web.Controllers
             //Verifica se um texto foi buscado
             if (!String.IsNullOrEmpty(textoBuscado))
             {
-                if (metodo.Equals("inicial"))
+                if (!String.IsNullOrEmpty(metodo))
                 {
                     clientes = pnClientes.RetornaClientesPorInicial(textoBuscado).ToPagedList(pageIndex, pageSize);
                     return View(clientes);

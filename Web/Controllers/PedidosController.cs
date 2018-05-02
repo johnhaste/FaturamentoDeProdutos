@@ -26,7 +26,7 @@ namespace Web.Controllers
         */
 
         //Clientes e busca
-        public ActionResult Index(int? page, Guid clienteID)
+        public ActionResult Index(int? page, Guid? clienteID)
         {
             int pageSize = 5;
             int pageIndex = 1;
@@ -35,9 +35,9 @@ namespace Web.Controllers
             IPagedList<Pedido> pedidos;
 
             //Verifica se um texto foi buscado
-            if (!String.IsNullOrEmpty(clienteID.ToString()))
+            if (clienteID.HasValue)
             {
-                pedidos = pnPedidos.RetornaPedidosDoCliente(clienteID).ToPagedList(pageIndex, pageSize);
+                pedidos = pnPedidos.RetornaPedidosDoCliente(clienteID.Value).ToPagedList(pageIndex, pageSize);
                 return View(pedidos);
             }
 
