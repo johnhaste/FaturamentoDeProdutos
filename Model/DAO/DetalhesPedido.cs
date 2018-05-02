@@ -15,9 +15,9 @@ namespace Model.DAO
     public partial class DetalhesPedido
     {
         public int NroPedido { get; set; }
-        public Nullable<System.Guid> ProdutoID { get; set; }
-        public Nullable<int> Qtde { get; set; }
-        public Nullable<double> Preco { get; set; }
+        public System.Guid ProdutoID { get; set; }
+        public int Qtde { get; set; }
+        public double Preco { get; set; }
     
         public virtual Pedido Pedido { get; set; }
         public virtual Produto Produto { get; set; }

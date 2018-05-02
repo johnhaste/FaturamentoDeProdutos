@@ -64,7 +64,7 @@ namespace Web.Controllers
             {
                 db.DetalhesPedido.Add(detalhesPedido);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { numeroPedido = detalhesPedido.NroPedido });
             }
 
             ViewBag.NroPedido = new SelectList(db.Pedidos, "NroPedido", "NroPedido", detalhesPedido.NroPedido);

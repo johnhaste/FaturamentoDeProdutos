@@ -21,8 +21,7 @@
         <AssociationConnector Association="Model.FK_Pedidos_Clientes" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_DetalhesPedido_Pedidos" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_DetalhesPedido_Produtos" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.AspNetUserRoles1" />
+        <AssociationConnector ManuallyRouted="false" Association="Model.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
