@@ -31,7 +31,7 @@ namespace Model.DAO
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<DetalhesPedido> DetalhesPedidoes { get; set; }
+        public virtual DbSet<DetalhesPedido> DetalhesPedido { get; set; }
         public virtual DbSet<Endereco> Enderecos { get; set; }
         public virtual DbSet<Pedido> Pedidos { get; set; }
         public virtual DbSet<Produto> Produtos { get; set; }

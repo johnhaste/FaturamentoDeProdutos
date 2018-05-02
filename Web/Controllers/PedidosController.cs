@@ -65,7 +65,7 @@ namespace Web.Controllers
         public ActionResult Create()
         {
             ViewBag.ClienteID = new SelectList(db.Clientes, "ClienteID", "Nome");
-            ViewBag.NroPedido = new SelectList(db.DetalhesPedidoes, "NroPedido", "NroPedido");
+            ViewBag.NroPedido = new SelectList(db.DetalhesPedido, "NroPedido", "NroPedido");
             return View();
         }
 
@@ -84,7 +84,7 @@ namespace Web.Controllers
             }
 
             ViewBag.ClienteID = new SelectList(db.Clientes, "ClienteID", "Nome", pedido.ClienteID);
-            ViewBag.NroPedido = new SelectList(db.DetalhesPedidoes, "NroPedido", "NroPedido", pedido.NroPedido);
+            ViewBag.NroPedido = new SelectList(db.DetalhesPedido, "NroPedido", "NroPedido", pedido.NroPedido);
             return View(pedido);
         }
 
@@ -101,7 +101,7 @@ namespace Web.Controllers
                 return HttpNotFound();
             }
             ViewBag.ClienteID = new SelectList(db.Clientes, "ClienteID", "Nome", pedido.ClienteID);
-            ViewBag.NroPedido = new SelectList(db.DetalhesPedidoes, "NroPedido", "NroPedido", pedido.NroPedido);
+            ViewBag.NroPedido = new SelectList(db.DetalhesPedido, "NroPedido", "NroPedido", pedido.NroPedido);
             return View(pedido);
         }
 
@@ -119,7 +119,7 @@ namespace Web.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ClienteID = new SelectList(db.Clientes, "ClienteID", "Nome", pedido.ClienteID);
-            ViewBag.NroPedido = new SelectList(db.DetalhesPedidoes, "NroPedido", "NroPedido", pedido.NroPedido);
+            ViewBag.NroPedido = new SelectList(db.DetalhesPedido, "NroPedido", "NroPedido", pedido.NroPedido);
             return View(pedido);
         }
 

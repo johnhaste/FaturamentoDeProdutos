@@ -37,7 +37,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DetalhesPedido detalhesPedido = db.DetalhesPedidoes.Find(id);
+            DetalhesPedido detalhesPedido = db.DetalhesPedido.Find(id);
             if (detalhesPedido == null)
             {
                 return HttpNotFound();
@@ -62,7 +62,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.DetalhesPedidoes.Add(detalhesPedido);
+                db.DetalhesPedido.Add(detalhesPedido);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -79,7 +79,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DetalhesPedido detalhesPedido = db.DetalhesPedidoes.Find(id);
+            DetalhesPedido detalhesPedido = db.DetalhesPedido.Find(id);
             if (detalhesPedido == null)
             {
                 return HttpNotFound();
@@ -114,7 +114,7 @@ namespace Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DetalhesPedido detalhesPedido = db.DetalhesPedidoes.Find(id);
+            DetalhesPedido detalhesPedido = db.DetalhesPedido.Find(id);
             if (detalhesPedido == null)
             {
                 return HttpNotFound();
@@ -127,8 +127,8 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            DetalhesPedido detalhesPedido = db.DetalhesPedidoes.Find(id);
-            db.DetalhesPedidoes.Remove(detalhesPedido);
+            DetalhesPedido detalhesPedido = db.DetalhesPedido.Find(id);
+            db.DetalhesPedido.Remove(detalhesPedido);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

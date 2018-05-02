@@ -31,7 +31,7 @@ namespace Model.PN
             try
             {
                 Entities db = new Entities();
-                return db.DetalhesPedidoes.ToList();
+                return db.DetalhesPedido.ToList();
 
             }
             catch (Exception)

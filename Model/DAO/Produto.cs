@@ -17,7 +17,7 @@ namespace Model.DAO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Produto()
         {
-            this.DetalhesPedidoes = new HashSet<DetalhesPedido>();
+            this.DetalhesPedido = new HashSet<DetalhesPedido>();
         }
     
         public System.Guid ProdutoID { get; set; }
@@ -25,6 +25,6 @@ namespace Model.DAO
         public Nullable<double> Preco { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalhesPedido> DetalhesPedidoes { get; set; }
+        public virtual ICollection<DetalhesPedido> DetalhesPedido { get; set; }
     }
 }

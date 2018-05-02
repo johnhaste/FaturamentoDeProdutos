@@ -81,7 +81,7 @@
           <Property Name="ClienteID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
-        <EntityType Name="DetalhesPedidoes">
+        <EntityType Name="DetalhesPedido">
           <Key>
             <PropertyRef Name="NroPedido" />
           </Key>
@@ -194,24 +194,24 @@
         </Association>
         <Association Name="FK_DetalhesPedido_Pedidos">
           <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1" />
-          <End Role="DetalhesPedidoes" Type="Self.DetalhesPedidoes" Multiplicity="0..1" />
+          <End Role="DetalhesPedido" Type="Self.DetalhesPedido" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Pedidos">
               <PropertyRef Name="NroPedido" />
             </Principal>
-            <Dependent Role="DetalhesPedidoes">
+            <Dependent Role="DetalhesPedido">
               <PropertyRef Name="NroPedido" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetalhesPedido_Produtos">
           <End Role="Produtos" Type="Self.Produtos" Multiplicity="0..1" />
-          <End Role="DetalhesPedidoes" Type="Self.DetalhesPedidoes" Multiplicity="*" />
+          <End Role="DetalhesPedido" Type="Self.DetalhesPedido" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Produtos">
               <PropertyRef Name="ProdutoID" />
             </Principal>
-            <Dependent Role="DetalhesPedidoes">
+            <Dependent Role="DetalhesPedido">
               <PropertyRef Name="ProdutoID" />
             </Dependent>
           </ReferentialConstraint>
@@ -249,7 +249,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DetalhesPedidoes" EntityType="Self.DetalhesPedidoes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalhesPedido" EntityType="Self.DetalhesPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enderecos" EntityType="Self.Enderecos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Produtos" EntityType="Self.Produtos" Schema="dbo" store:Type="Tables" />
@@ -279,11 +279,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_DetalhesPedido_Pedidos" Association="Self.FK_DetalhesPedido_Pedidos">
             <End Role="Pedidos" EntitySet="Pedidos" />
-            <End Role="DetalhesPedidoes" EntitySet="DetalhesPedidoes" />
+            <End Role="DetalhesPedido" EntitySet="DetalhesPedido" />
           </AssociationSet>
           <AssociationSet Name="FK_DetalhesPedido_Produtos" Association="Self.FK_DetalhesPedido_Produtos">
             <End Role="Produtos" EntitySet="Produtos" />
-            <End Role="DetalhesPedidoes" EntitySet="DetalhesPedidoes" />
+            <End Role="DetalhesPedido" EntitySet="DetalhesPedido" />
           </AssociationSet>
           <AssociationSet Name="FK_Enderecos_Clientes" Association="Self.FK_Enderecos_Clientes">
             <End Role="Clientes" EntitySet="Clientes" />
@@ -407,7 +407,7 @@
           <Property Name="ProdutoID" Type="Guid" Nullable="false" />
           <Property Name="Descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Preco" Type="Double" />
-          <NavigationProperty Name="DetalhesPedidoes" Relationship="Self.FK_DetalhesPedido_Produtos" FromRole="Produtos" ToRole="DetalhesPedido" />
+          <NavigationProperty Name="DetalhesPedido" Relationship="Self.FK_DetalhesPedido_Produtos" FromRole="Produtos" ToRole="DetalhesPedido" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -496,7 +496,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Clientes" EntityType="Self.Cliente" />
-          <EntitySet Name="DetalhesPedidoes" EntityType="Self.DetalhesPedido" />
+          <EntitySet Name="DetalhesPedido" EntityType="Self.DetalhesPedido" />
           <EntitySet Name="Enderecos" EntityType="Self.Endereco" />
           <EntitySet Name="Pedidos" EntityType="Self.Pedido" />
           <EntitySet Name="Produtos" EntityType="Self.Produto" />
@@ -518,11 +518,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_DetalhesPedido_Pedidos" Association="Self.FK_DetalhesPedido_Pedidos">
             <End Role="Pedidos" EntitySet="Pedidos" />
-            <End Role="DetalhesPedido" EntitySet="DetalhesPedidoes" />
+            <End Role="DetalhesPedido" EntitySet="DetalhesPedido" />
           </AssociationSet>
           <AssociationSet Name="FK_DetalhesPedido_Produtos" Association="Self.FK_DetalhesPedido_Produtos">
             <End Role="Produtos" EntitySet="Produtos" />
-            <End Role="DetalhesPedido" EntitySet="DetalhesPedidoes" />
+            <End Role="DetalhesPedido" EntitySet="DetalhesPedido" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -606,9 +606,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DetalhesPedidoes">
+    <EntitySetMapping Name="DetalhesPedido">
       <EntityTypeMapping TypeName="IsTypeOf(Model.DetalhesPedido)">
-        <MappingFragment StoreEntitySet="DetalhesPedidoes">
+        <MappingFragment StoreEntitySet="DetalhesPedido">
           <ScalarProperty Name="NroPedido" ColumnName="NroPedido" />
           <ScalarProperty Name="ProdutoID" ColumnName="ProdutoID" />
           <ScalarProperty Name="Qtde" ColumnName="Qtde" />
