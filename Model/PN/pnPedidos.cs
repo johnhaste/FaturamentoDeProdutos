@@ -25,6 +25,22 @@ namespace Model.PN
             }
         }
 
+        public static List<DetalhesPedido> RetornaDetalhesPedidos(int numeroPedido)
+        {
+
+            try
+            {
+                Entities db = new Entities();
+                return db.DetalhesPedidoes.ToList();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
         public static List<Pedido> RetornaPedidosDoCliente(Guid clienteID)
         {
 
@@ -38,6 +54,22 @@ namespace Model.PN
                 throw;
             }
             
+        }
+
+        //Retorna os detalhes do pedido através do número
+        public static List<DetalhesPedido> RetornaDetalhesPedidosPorNumero(int numeroPedido)
+        {
+
+            try
+            {
+                return RetornaDetalhesPedidos(numeroPedido).Where(x => x.NroPedido == numeroPedido).ToList();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

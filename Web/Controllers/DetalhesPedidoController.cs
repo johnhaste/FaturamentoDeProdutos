@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Model.DAO;
+using Model.PN;
+using PagedList;
 
 namespace Web.Controllers
 {
@@ -15,12 +17,19 @@ namespace Web.Controllers
         private Entities db = new Entities();
 
         // GET: DetalhesPedido
-        public ActionResult Index()
+        public ActionResult Index(int? page, int numeroPedido)
         {
-            var detalhesPedidoes = db.DetalhesPedidoes.Include(d => d.Pedido).Include(d => d.Produto);
-            return View(detalhesPedidoes.ToList());
-        }
+            int pageSize = 5;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
+            IPagedList<DetalhesPedido> detalhesPedido;
+
+            detalhesPedido = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido).ToPagedList(pageIndex, pageSize);
+
+            return View(detalhesPedido);
+        }
+        
         // GET: DetalhesPedido/Details/5
         public ActionResult Details(int? id)
         {

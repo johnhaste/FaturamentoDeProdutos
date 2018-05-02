@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="PN\pnClientes.cs" />
     <Compile Include="PN\pnPedidos.cs" />
+    <Compile Include="PN\pnProdutos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -45,8 +45,8 @@ namespace Web.Controllers
             return View(pedidos);
 
         }
-
-        // GET: Pedidos/Details/5
+        
+        /* GET: Pedidos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -59,7 +59,7 @@ namespace Web.Controllers
                 return HttpNotFound();
             }
             return View(pedido);
-        }
+        }*/
 
         // GET: Pedidos/Create
         public ActionResult Create()
