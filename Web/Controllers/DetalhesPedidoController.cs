@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Model.AUXILIAR;
+using Model.VM;
 using Model.DAO;
 using Model.PN;
 using PagedList;
@@ -28,10 +30,49 @@ namespace Web.Controllers
             IPagedList<DetalhesPedido> detalhesPedido;
 
             detalhesPedido = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido).ToPagedList(pageIndex, pageSize);
+           
+            
 
             return View(detalhesPedido);
         }
-        
+
+        //Faturamentos por Mês e ano
+        public ActionResult Faturamento()
+        {
+
+            //Cria a ViewModel
+            vmFaturamentoTotal FaturamentoGeral = new vmFaturamentoTotal();
+
+            List<Faturamento> faturamentos = new List<Faturamento>();
+
+            Faturamento primeiroFaturamento = new Faturamento() {ano = 2018, mes = 1, valorTotal = 1000 };
+            Faturamento segundoFaturamento = new Faturamento() { ano = 2018, mes = 2, valorTotal = 1200 };
+
+            faturamentos.Add(primeiroFaturamento);
+            faturamentos.Add(segundoFaturamento);
+
+            FaturamentoGeral.Faturamentos = faturamentos;
+
+            return View(FaturamentoGeral);
+
+            /*
+            //Cria um evento que irá receber as informações básicas da classe
+            Eventos Evento = pnEventos.RetornaEventoPorId(id);
+
+            //Preenche as informações e listas do evento
+            EventoCompleto.id = Guid.Parse(id.ToString());
+            EventoCompleto.Nome = Evento.Nome;
+            EventoCompleto.Descricao = Evento.Descricao;
+            EventoCompleto.Categoria = pnEventos.RetornaCategoriaPorId(Evento.Categoria).Nome;
+            EventoCompleto.DataDeInicio = Evento.DataDeInicio;
+            EventoCompleto.DataDeTermino = Evento.DataDeTermino;
+            EventoCompleto.Posts = pnEventos.RetornaPostsPorIdEvento(id);
+            EventoCompleto.InscritosNoEvento = pnUsuario.RetornaInscritosPorIdEvento(id);
+            EventoCompleto.TwitterLink = pnEventos.RetornaLinkTwitterPorDescricao(Evento.Nome, Evento.Descricao);
+            */
+            
+        }
+
         // GET: DetalhesPedido/Details/5
         public ActionResult Details(int? id)
         {

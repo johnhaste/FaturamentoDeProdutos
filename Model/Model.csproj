@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AUXILIAR\Faturamento.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DAO\AspNetRole.cs">
       <DependentUpon>FaturamentoDeProdutos.tt</DependentUpon>
@@ -114,10 +115,9 @@
     <Compile Include="PN\pnPedidos.cs" />
     <Compile Include="PN\pnProdutos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VM\vmFaturamentoTotal.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="VM\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="DAO\FaturamentoDeProdutos.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

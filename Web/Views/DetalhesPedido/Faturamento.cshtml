@@ -1,0 +1,60 @@
+﻿@model Model.VM.vmFaturamentoTotal
+
+@{
+    ViewBag.Title = "Faturamento";
+}
+
+<h2>Faturamento</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <table>
+            <tr>
+                <td>
+                    Ano
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   Mês
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Total
+                </td>
+            </tr>
+           
+        </table>
+
+        <hr />
+
+        <table>
+           
+            @foreach (var item in Model.Faturamentos)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ano)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.mes)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.valorTotal)
+                    </td>
+                </tr>
+            }
+
+            
+        </table>
+
+        <hr />
+
+    </dl>
+</div>
