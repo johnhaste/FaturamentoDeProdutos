@@ -37,54 +37,34 @@ namespace Web.Controllers
         }
 
         //Faturamentos por Mês e ano
-        public ActionResult Faturamento()
+        public ActionResult Faturamento(int anoEscolhido)
         {
-            //OBJETIVO : Pegar a soma de todos os pedidos de janeiro
-
-            double valorTotal = 0;
-
-            //Pegar todos os pedidos de janeiro
-            List<Pedido> pedidosJaneiro = pnPedidos.RetornaPedidosPorPeriodo(2018, 1);
-
-            //Somar todos os valores 
-            for (int i = 0; i < pedidosJaneiro.Count; i++) {
-                
-                valorTotal += pnPedidos.RetornaValorTotalDoPedido(pedidosJaneiro.ElementAt(i).NroPedido);
-
-            }
-            
-            ViewBag.Total = valorTotal;
 
             //Cria a ViewModel
             vmFaturamentoTotal FaturamentoGeral = new vmFaturamentoTotal();
 
+            //Faturamentos que aparecerão na ViewModel
             List<Faturamento> faturamentos = new List<Faturamento>();
             
-            Faturamento janeiroFaturamento = new Faturamento(1) {ano = 2018, mes = 1, valorTotal = 1000 };
-            Faturamento fevereiroFaturamento = new Faturamento(2) { ano = 2018, mes = 2, valorTotal = 1200 };
+            //12 meses
+            for (int i = 1; i < 13; i++) {
 
-            faturamentos.Add(janeiroFaturamento);
-            faturamentos.Add(fevereiroFaturamento);
+                //Pegar todos os pedidos de janeiro
+                List<Pedido> pedidosDoMes = pnPedidos.RetornaPedidosPorPeriodo(anoEscolhido, i);
 
+                faturamentos.Add(new Faturamento(i)
+                {
+                    ano = anoEscolhido,
+                    mes = i,
+                    valorTotal = pnPedidos.RetornaValorTotalDeListaDePedido(pedidosDoMes)
+                });
+
+
+            }
+            
             FaturamentoGeral.Faturamentos = faturamentos;
 
             return View(FaturamentoGeral);
-
-            /*
-            //Cria um evento que irá receber as informações básicas da classe
-            Eventos Evento = pnEventos.RetornaEventoPorId(id);
-
-            //Preenche as informações e listas do evento
-            EventoCompleto.id = Guid.Parse(id.ToString());
-            EventoCompleto.Nome = Evento.Nome;
-            EventoCompleto.Descricao = Evento.Descricao;
-            EventoCompleto.Categoria = pnEventos.RetornaCategoriaPorId(Evento.Categoria).Nome;
-            EventoCompleto.DataDeInicio = Evento.DataDeInicio;
-            EventoCompleto.DataDeTermino = Evento.DataDeTermino;
-            EventoCompleto.Posts = pnEventos.RetornaPostsPorIdEvento(id);
-            EventoCompleto.InscritosNoEvento = pnUsuario.RetornaInscritosPorIdEvento(id);
-            EventoCompleto.TwitterLink = pnEventos.RetornaLinkTwitterPorDescricao(Evento.Nome, Evento.Descricao);
-            */
             
         }
 

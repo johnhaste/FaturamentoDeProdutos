@@ -88,6 +88,31 @@ namespace Model.PN
 
         }
 
+        //Recebe uma lista de pedidos e retorna a soma de todos os pedidos
+        public static double RetornaValorTotalDeListaDePedido(List<Pedido> pedidos)
+        {
+
+            try
+            {
+                double valorTotal = 0;
+
+                for (int i = 0; i < pedidos.Count; i++)
+                {
+
+                    valorTotal += pnPedidos.RetornaValorTotalDoPedido(pedidos.ElementAt(i).NroPedido);
+
+                }
+
+                return valorTotal;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
         //Retorna os pedidos por mês
         public static List<Pedido> RetornaPedidosPorPeriodo(int ano, int mes)
         {

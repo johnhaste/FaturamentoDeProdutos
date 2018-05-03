@@ -11,7 +11,7 @@ namespace Model.AUXILIAR
         public int ano;
         public int mes;
         public String mesNome;
-        public int valorTotal;
+        public double valorTotal;
         public List<String> NomeMeses = new List<string> {
             "Janeiro",
             "Fevereiro",
