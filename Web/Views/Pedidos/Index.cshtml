@@ -34,7 +34,9 @@
                 @Html.DisplayFor(modelItem => item.Cliente.Nome)
             </td>
             <td>
-                <a href="@Url.Action("Index", "DetalhesPedido", new { numeroPedido = item.NroPedido })" class="btn btn-primary">Pedidos &nbsp;<span class="glyphicon glyphicon-gift"></span></a>|
+                <a href="@Url.Action("Index", "DetalhesPedido", new { numeroPedido = item.NroPedido })" class="btn btn-primary">Pedidos &nbsp;<span class="glyphicon glyphicon-gift"></span></a> |
+                <a href="@Url.Action("DetalhesPedidoPorNumero", "DetalhesPedido")" class="btn btn-primary"> Detalhes &nbsp;<span class="glyphicon glyphicon-gift"></span></a> |
+
                 @Html.ActionLink("Edit", "Edit", new { id = item.NroPedido }) |
                 @Html.ActionLink("Details", "Details", new { id = item.NroPedido }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.NroPedido })

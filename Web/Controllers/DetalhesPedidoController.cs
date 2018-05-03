@@ -18,6 +18,7 @@ namespace Web.Controllers
     {
         private Entities db = new Entities();
 
+        /*
         // GET: DetalhesPedido
         public ActionResult Index(int? page, int numeroPedido)
         {
@@ -31,12 +32,21 @@ namespace Web.Controllers
 
             detalhesPedido = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido).ToPagedList(pageIndex, pageSize);
            
-            
+            return View(detalhesPedido);
+        }
+        */
 
+        public ActionResult DetalhesPedidoPorNumero()
+        {
+            
+            //Com Um Pedido funciona
+            List<DetalhesPedido> detalhesPedido = pnPedidos.RetornaDetalhesPedidosPorNumero(1);
+            
+          
             return View(detalhesPedido);
         }
 
-        //Faturamentos por Mês e ano
+        //Faturamentos Total por Mês e ano
         public ActionResult Faturamento(int? anoEscolhido, Guid? produtoID)
         {
 
@@ -137,11 +147,7 @@ namespace Web.Controllers
 
                 return View(FaturamentoGeral);
                 
-
             }
-
-
-           
             
         }
 

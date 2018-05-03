@@ -291,6 +291,7 @@
     <Content Include="Views\DetalhesPedido\Index.cshtml" />
     <Content Include="Views\Clientes\BuscarClientes.cshtml" />
     <Content Include="Views\DetalhesPedido\Faturamento.cshtml" />
+    <Content Include="Views\DetalhesPedido\DetalhesPedidoPorNumero.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

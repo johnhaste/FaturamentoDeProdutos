@@ -52,15 +52,32 @@ namespace Model.PN
             }
 
         }
-        
+
+        public static DetalhesPedido RetornaDetalhesPedidosPorId(int NroPedido)
+        {
+
+            try
+            {
+                Entities db = new Entities();
+                return db.DetalhesPedido.Where(x => x.NroPedido == NroPedido).First();
+                
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
 
         public static List<Pedido> RetornaPedidosDoCliente(Guid clienteID)
         {
 
             try
             {
-                return RetornaPedidos().Where(x => x.ClienteID == clienteID ).ToList();
-           
+                Entities db = new Entities();
+                return db.Pedidos.Where(x => x.ClienteID == clienteID).ToList();
+                
             }
             catch (Exception)
             {
@@ -75,8 +92,9 @@ namespace Model.PN
 
             try
             {
-                return RetornaDetalhesPedidos().Where(x => x.NroPedido == numeroPedido).ToList();
-
+                Entities db = new Entities();
+                return db.DetalhesPedido.Where(x => x.NroPedido == numeroPedido).ToList();
+                
             }
             catch (Exception)
             {
