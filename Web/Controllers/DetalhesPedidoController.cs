@@ -37,34 +37,111 @@ namespace Web.Controllers
         }
 
         //Faturamentos por Mês e ano
-        public ActionResult Faturamento(int anoEscolhido)
+        public ActionResult Faturamento(int? anoEscolhido, Guid? produtoID)
         {
+
+            if (anoEscolhido == null) {
+                anoEscolhido = DateTime.Now.Year;
+            }
 
             //Cria a ViewModel
             vmFaturamentoTotal FaturamentoGeral = new vmFaturamentoTotal();
 
             //Faturamentos que aparecerão na ViewModel
             List<Faturamento> faturamentos = new List<Faturamento>();
-            
-            //12 meses
-            for (int i = 1; i < 13; i++) {
 
-                //Pegar todos os pedidos de janeiro
-                List<Pedido> pedidosDoMes = pnPedidos.RetornaPedidosPorPeriodo(anoEscolhido, i);
+            //Se for uma busca total
+            if (produtoID == null)
+            {
 
-                faturamentos.Add(new Faturamento(i)
+                //12 meses
+                for (int i = 1; i < 13; i++)
                 {
-                    ano = anoEscolhido,
-                    mes = i,
-                    valorTotal = pnPedidos.RetornaValorTotalDeListaDePedido(pedidosDoMes)
-                });
 
+                    //Pegar todos os pedidos de janeiro
+                    List<Pedido> pedidosDoMes = pnPedidos.RetornaPedidosPorPeriodo((int) anoEscolhido, i);
+
+                    faturamentos.Add(new Faturamento(i)
+                    {
+                        ano = (int) anoEscolhido,
+                        mes = i,
+                        valorTotal = pnPedidos.RetornaValorTotalDeListaDePedido(pedidosDoMes)
+                    });
+
+
+                }
+
+                FaturamentoGeral.Faturamentos = faturamentos;
+
+                return View(FaturamentoGeral);
+
+            }//Se for a busca por um produto específico
+            else {
+                
+                //Pegar todos os DetalhesPedido que possuem o produtoID
+                List<DetalhesPedido> detalhesPedidoDoProduto = pnPedidos.RetornaDetalhesPedidosPorProduto(produtoID);
+                
+                //Números dos pedidos
+                List<int> nroPedidos = new List<int>();
+                
+                //Pegar todos os pedidos a partir dos DetalhesPedido
+                for (int i = 0; i < detalhesPedidoDoProduto.Count; i++){
+
+                    
+                    //Verifica se o pedido já foi adicionado
+                    if (!nroPedidos.Contains(detalhesPedidoDoProduto.ElementAt(i).NroPedido)) {
+                        nroPedidos.Add(detalhesPedidoDoProduto.ElementAt(i).NroPedido);
+                    }
+                    
+                }
+
+                //Lista com os pedidos que possuem o produto
+                List<Pedido> pedidosComOProduto = pnPedidos.RetornaPedidosPorListaDeNroPedido(nroPedidos);
+
+                //Debug dos pedidos
+                //ViewBag.PedidosEnvolvendoOProduto = pedidosComOProduto.Count;
+                
+                //12 meses
+                for (int i = 1; i < 13; i++)
+                {
+
+                    //Valor total por mês
+                    double valorTotalDoMes = 0;
+
+                    //Pedidos do mês do loop
+                    List<Pedido> pedidosDoMes = pedidosComOProduto.Where(x => x.Data.Month == i && x.Data.Year == anoEscolhido).ToList();
+
+                    //Recebe o valor total do mês DO PRODUTO ESPECÍFICO
+                    if (pedidosDoMes.Count > 0) {
+
+                        //Soma de cada pedido
+                        for (int j = 0; j < pedidosDoMes.Count; j++) {
+
+                            valorTotalDoMes += pnPedidos.RetornaValorDoProdutoDentroDoPedido(pedidosDoMes.ElementAt(j).NroPedido, produtoID);
+
+                        }
+                        
+                    }
+                    
+                    faturamentos.Add(new Faturamento(i)
+                    {
+                        ano = (int) anoEscolhido,
+                        mes = i,
+                        valorTotal = valorTotalDoMes
+                    });
+
+
+                }
+
+                FaturamentoGeral.Faturamentos = faturamentos;
+
+                return View(FaturamentoGeral);
+                
 
             }
-            
-            FaturamentoGeral.Faturamentos = faturamentos;
 
-            return View(FaturamentoGeral);
+
+           
             
         }
 

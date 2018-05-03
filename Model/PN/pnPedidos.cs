@@ -25,7 +25,19 @@ namespace Model.PN
             }
         }
 
-        public static List<DetalhesPedido> RetornaDetalhesPedidos(int numeroPedido)
+        public static Pedido RetornaPedidoPorNumero(int nroPedido)
+        {
+            try
+            {
+                return RetornaPedidos().Where(x => x.NroPedido == nroPedido).FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static List<DetalhesPedido> RetornaDetalhesPedidos()
         {
 
             try
@@ -40,6 +52,7 @@ namespace Model.PN
             }
 
         }
+        
 
         public static List<Pedido> RetornaPedidosDoCliente(Guid clienteID)
         {
@@ -62,7 +75,7 @@ namespace Model.PN
 
             try
             {
-                return RetornaDetalhesPedidos(numeroPedido).Where(x => x.NroPedido == numeroPedido).ToList();
+                return RetornaDetalhesPedidos().Where(x => x.NroPedido == numeroPedido).ToList();
 
             }
             catch (Exception)
@@ -128,7 +141,43 @@ namespace Model.PN
             }
 
         }
-        
 
+        //Retorna todos os DetalhesPedidos que envolvem um produto específico
+        public static List<DetalhesPedido> RetornaDetalhesPedidosPorProduto(Guid? produtoID) {
+
+            try
+            {
+                return RetornaDetalhesPedidos().Where(x => x.ProdutoID == produtoID).ToList();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public static List<Pedido> RetornaPedidosPorListaDeNroPedido(List<int> nroPedidos) {
+
+            List<Pedido> pedidos = new List<Pedido>();
+
+            for (int i = 0; i < nroPedidos.Count; i++)
+            {
+                pedidos.Add(RetornaPedidoPorNumero(nroPedidos.ElementAt(i)));
+            }
+
+            return pedidos;
+        }
+
+        public static double RetornaValorDoProdutoDentroDoPedido(int nroPedido,Guid? produtoID) 
+        {
+            double valorDoProdutoNoPedido = 0;
+
+            //Retorna o preco do DetalhesPedido que tem o nroPedido
+            valorDoProdutoNoPedido = pnPedidos.RetornaDetalhesPedidos().Where(x => x.NroPedido == nroPedido && x.ProdutoID == produtoID).FirstOrDefault().Preco;
+            
+            return valorDoProdutoNoPedido;
+        }
+        
     }
 }
