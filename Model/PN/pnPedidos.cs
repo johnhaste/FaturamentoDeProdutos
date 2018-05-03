@@ -151,7 +151,15 @@ namespace Model.PN
 
             try
             {
-                return RetornaPedidos().Where(x => x.Data.Year == ano && x.Data.Month == mes).ToList();
+                Entities db = new Entities();
+                if (mes == 0)
+                {
+                    db.Configuration.AutoDetectChangesEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+                    return db.Pedidos.Include("DetalhesPedido").Where(x => x.Data.Year == ano).ToList();
+                }
+
+                return  db.Pedidos.Where(x => x.Data.Year == ano && x.Data.Month == mes).ToList();
 
             }
             catch (Exception)
