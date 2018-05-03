@@ -7,54 +7,29 @@
 <h2>Faturamento</h2>
 
 <div>
-    <hr />
-    <dl class="dl-horizontal">
-        <table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ano</th>
+                <th scope="col">Mês</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Faturamentos)
+        {
             <tr>
                 <td>
-                    Ano
+                    @Html.DisplayFor(modelItem => item.ano)
                 </td>
-            </tr>
-            <tr>
                 <td>
-                   Mês
+                    @Html.DisplayFor(modelItem => item.mesNome)
                 </td>
-            </tr>
-            <tr>
                 <td>
-                    Total
+                    R$@Html.DisplayFor(modelItem => item.valorTotal)
                 </td>
             </tr>
-           
-        </table>
-
-        <hr />
-
-        <table>
-           
-            @foreach (var item in Model.Faturamentos)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ano)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.mes)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.valorTotal)
-                    </td>
-                </tr>
-            }
-
-            
-        </table>
-
-        <hr />
-
-    </dl>
+         }
+        </tbody>
+    </table>    
 </div>

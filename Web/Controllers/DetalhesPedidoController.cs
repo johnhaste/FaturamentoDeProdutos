@@ -45,8 +45,8 @@ namespace Web.Controllers
 
             List<Faturamento> faturamentos = new List<Faturamento>();
 
-            Faturamento primeiroFaturamento = new Faturamento() {ano = 2018, mes = 1, valorTotal = 1000 };
-            Faturamento segundoFaturamento = new Faturamento() { ano = 2018, mes = 2, valorTotal = 1200 };
+            Faturamento primeiroFaturamento = new Faturamento(1) {ano = 2018, mes = 1, valorTotal = 1000 };
+            Faturamento segundoFaturamento = new Faturamento(2) { ano = 2018, mes = 2, valorTotal = 1200 };
 
             faturamentos.Add(primeiroFaturamento);
             faturamentos.Add(segundoFaturamento);

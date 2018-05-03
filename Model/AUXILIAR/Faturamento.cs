@@ -10,6 +10,25 @@ namespace Model.AUXILIAR
     {
         public int ano;
         public int mes;
+        public String mesNome;
         public int valorTotal;
+        public List<String> NomeMeses = new List<string> {
+            "Janeiro",
+            "Fevereiro",
+            "Março",
+            "Abril",
+            "Maio",
+            "Junho",
+            "Julho",
+            "Agosto",
+            "Setembro,",
+            "Outubro",
+            "Novembro",
+            "Dezembro"
+        };
+
+        public Faturamento(int mes) {
+            mesNome = NomeMeses.ElementAt(mes-1);
+        }
     }
 }
