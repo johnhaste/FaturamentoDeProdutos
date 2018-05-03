@@ -22,6 +22,16 @@
 
 <hr />
 
+@using (Html.BeginForm("Faturamento", "DetalhesPedido", FormMethod.Get))
+{
+<p>
+    Produto Específico
+    @Html.DropDownList("ProdutoID", ViewBag.ProdutosDropDown as SelectList)
+    <input class="btn btn-primary" type="submit" value="Buscar por Produto" />
+</p>
+}
+
+<hr />
 
 <div>
     <table class="table">

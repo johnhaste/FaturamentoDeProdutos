@@ -19,7 +19,7 @@ namespace Web.Controllers
         private Entities db = new Entities();
 
         /*
-        // GET: DetalhesPedido
+        // GET: DetalhesPedido Com Paginação
         public ActionResult Index(int? page, int numeroPedido)
         {
             ViewBag.Total = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido).Sum(x => x.Preco);
@@ -51,10 +51,14 @@ namespace Web.Controllers
         //Faturamentos Total por Mês e ano
         public ActionResult Faturamento(int? anoEscolhido, Guid? produtoID)
         {
-
+            
+            //Ajustando o ano atual
             if (anoEscolhido == null) {
                 anoEscolhido = DateTime.Now.Year;
             }
+
+            //DropDownList de Produtos
+            ViewBag.ProdutosDropDown = new SelectList(pnProdutos.RetornaProdutos(), "ProdutoID", "Descricao");
 
             //Cria a ViewModel
             vmFaturamentoTotal FaturamentoGeral = new vmFaturamentoTotal();
@@ -62,12 +66,12 @@ namespace Web.Controllers
             //Faturamentos que aparecerão na ViewModel
             List<Faturamento> faturamentos = new List<Faturamento>();
 
-            //Se for uma busca total
+            //Se for uma busca geral (não de um produto específico)
             if (produtoID == null)
             {
 
                 //12 meses
-                for (int i = 1; i < 13; i++)
+                for (int i = 1; i < 2; i++)
                 {
 
                     //Pegar todos os pedidos de janeiro
@@ -83,6 +87,7 @@ namespace Web.Controllers
 
                 }
 
+                //Passa os faturamentos para a ViewModel
                 FaturamentoGeral.Faturamentos = faturamentos;
 
                 return View(FaturamentoGeral);
@@ -109,9 +114,6 @@ namespace Web.Controllers
 
                 //Lista com os pedidos que possuem o produto
                 List<Pedido> pedidosComOProduto = pnPedidos.RetornaPedidosPorListaDeNroPedido(nroPedidos);
-
-                //Debug dos pedidos
-                //ViewBag.PedidosEnvolvendoOProduto = pedidosComOProduto.Count;
                 
                 //12 meses
                 for (int i = 1; i < 13; i++)

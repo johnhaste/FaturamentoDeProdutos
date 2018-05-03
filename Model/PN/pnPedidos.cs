@@ -110,6 +110,7 @@ namespace Model.PN
 
             try
             {
+
                 return RetornaDetalhesPedidosPorNumero(numeroPedido).Sum(x => x.Preco);
 
             }
@@ -145,14 +146,15 @@ namespace Model.PN
 
         }
 
-        //Retorna os pedidos por mês
+        //Retorna os pedidos por Ano e Mês
         public static List<Pedido> RetornaPedidosPorPeriodo(int ano, int mes)
         {
 
             try
             {
-                return RetornaPedidos().Where(x => x.Data.Year == ano && x.Data.Month == mes).ToList();
-
+                Entities db = new Entities();
+                return db.Pedidos.Where(x => x.Data.Year == ano && x.Data.Month == mes).ToList();
+                
             }
             catch (Exception)
             {
@@ -166,7 +168,8 @@ namespace Model.PN
 
             try
             {
-                return RetornaDetalhesPedidos().Where(x => x.ProdutoID == produtoID).ToList();
+                Entities db = new Entities();
+                return db.DetalhesPedido.Where(x => x.ProdutoID == produtoID).ToList();
 
             }
             catch (Exception)
@@ -192,8 +195,10 @@ namespace Model.PN
         {
             double valorDoProdutoNoPedido = 0;
 
+            Entities db = new Entities();
+            
             //Retorna o preco do DetalhesPedido que tem o nroPedido
-            valorDoProdutoNoPedido = pnPedidos.RetornaDetalhesPedidos().Where(x => x.NroPedido == nroPedido && x.ProdutoID == produtoID).FirstOrDefault().Preco;
+            valorDoProdutoNoPedido = db.DetalhesPedido.Where(x => x.NroPedido == nroPedido && x.ProdutoID == produtoID).FirstOrDefault().Preco;
             
             return valorDoProdutoNoPedido;
         }
