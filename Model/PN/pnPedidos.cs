@@ -30,7 +30,7 @@ namespace Model.PN
             try
             {
                 Entities db = new Entities();
-                return db.Pedidos.Where(x => x.NroPedido == nroPedido).FirstOrDefault();
+                return db.Pedidos.Where(x => x.NroPedido == nroPedido).First();
             }
             catch (Exception)
             {
@@ -193,14 +193,8 @@ namespace Model.PN
 
         public static double RetornaValorDoProdutoDentroDoPedido(int nroPedido,Guid? produtoID) 
         {
-            double valorDoProdutoNoPedido = 0;
-
             Entities db = new Entities();
-            
-            //Retorna o preco do DetalhesPedido que tem o nroPedido
-            valorDoProdutoNoPedido = db.DetalhesPedido.Where(x => x.NroPedido == nroPedido && x.ProdutoID == produtoID).FirstOrDefault().Preco;
-            
-            return valorDoProdutoNoPedido;
+            return db.DetalhesPedido.Where(x => x.NroPedido == nroPedido && x.ProdutoID == produtoID).First().Preco;
         }
         
     }

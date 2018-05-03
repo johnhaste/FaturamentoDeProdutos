@@ -83,8 +83,7 @@ namespace Web.Controllers
                         mes = i,
                         valorTotal = pnPedidos.RetornaValorTotalDeListaDePedido(pedidosDoMes)
                     });
-
-
+                    
                 }
 
                 //Passa os faturamentos para a ViewModel
@@ -94,20 +93,21 @@ namespace Web.Controllers
 
             }//Se for a busca por um produto específico
             else {
-                
+
                 //Pegar todos os DetalhesPedido que possuem o produtoID
                 List<DetalhesPedido> detalhesPedidoDoProduto = pnPedidos.RetornaDetalhesPedidosPorProduto(produtoID);
-                
-                //Números dos pedidos
+              
+                 //Números dos pedidos que possuem o produto
                 List<int> nroPedidos = new List<int>();
-                
+
                 //Pegar todos os pedidos a partir dos DetalhesPedido
                 for (int i = 0; i < detalhesPedidoDoProduto.Count; i++){
-
                     
                     //Verifica se o pedido já foi adicionado
                     if (!nroPedidos.Contains(detalhesPedidoDoProduto.ElementAt(i).NroPedido)) {
+
                         nroPedidos.Add(detalhesPedidoDoProduto.ElementAt(i).NroPedido);
+
                     }
                     
                 }
@@ -116,7 +116,7 @@ namespace Web.Controllers
                 List<Pedido> pedidosComOProduto = pnPedidos.RetornaPedidosPorListaDeNroPedido(nroPedidos);
                 
                 //12 meses
-                for (int i = 1; i < 13; i++)
+                for (int i = 1; i < 2; i++)
                 {
 
                     //Valor total por mês
