@@ -71,5 +71,41 @@ namespace Model.PN
             }
 
         }
+
+        //Recebe um número de pedido e retorna o valor da soma dos preços dos produtos
+        public static double RetornaValorTotalDoPedido(int numeroPedido)
+        {
+
+            try
+            {
+                return RetornaDetalhesPedidosPorNumero(numeroPedido).Sum(x => x.Preco);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        //Retorna os pedidos por mês
+        public static List<Pedido> RetornaPedidosPorPeriodo(int ano, int mes)
+        {
+
+            try
+            {
+                return RetornaPedidos().Where(x => x.Data.Month == mes && x.Data.Year == ano).ToList();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        
+
+
     }
 }

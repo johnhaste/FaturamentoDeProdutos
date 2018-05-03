@@ -39,17 +39,24 @@ namespace Web.Controllers
         //Faturamentos por Mês e ano
         public ActionResult Faturamento()
         {
+            //OBJETIVO : Pegar a soma de todos os pedidos de janeiro
 
+            //Pegar todos os pedidos de janeiro
+            List<Pedido> TodosOsPedidos = pnPedidos.RetornaPedidosPorPeriodo(2018, 1);
+
+            //Pegar todos os DetalhesPedidos de Janeiro
+            ViewBag.Total = pnPedidos.RetornaValorTotalDoPedido(1);
+            
             //Cria a ViewModel
             vmFaturamentoTotal FaturamentoGeral = new vmFaturamentoTotal();
 
             List<Faturamento> faturamentos = new List<Faturamento>();
+            
+            Faturamento janeiroFaturamento = new Faturamento(1) {ano = 2018, mes = 1, valorTotal = 1000 };
+            Faturamento fevereiroFaturamento = new Faturamento(2) { ano = 2018, mes = 2, valorTotal = 1200 };
 
-            Faturamento primeiroFaturamento = new Faturamento(1) {ano = 2018, mes = 1, valorTotal = 1000 };
-            Faturamento segundoFaturamento = new Faturamento(2) { ano = 2018, mes = 2, valorTotal = 1200 };
-
-            faturamentos.Add(primeiroFaturamento);
-            faturamentos.Add(segundoFaturamento);
+            faturamentos.Add(janeiroFaturamento);
+            faturamentos.Add(fevereiroFaturamento);
 
             FaturamentoGeral.Faturamentos = faturamentos;
 
