@@ -36,11 +36,13 @@ namespace Web.Controllers
         }
         */
 
-        public ActionResult DetalhesPedidoPorNumero()
+        public ActionResult DetalhesPedidoPorNumero(int numeroPedido)
         {
-            
+
+            ViewBag.Total = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido).Sum(x => x.Preco);
+
             //Com Um Pedido funciona
-            List<DetalhesPedido> detalhesPedido = pnPedidos.RetornaDetalhesPedidosPorNumero(1);
+            List<DetalhesPedido> detalhesPedido = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido);
             
           
             return View(detalhesPedido);

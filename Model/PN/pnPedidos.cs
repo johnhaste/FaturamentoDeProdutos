@@ -29,7 +29,8 @@ namespace Model.PN
         {
             try
             {
-                return RetornaPedidos().Where(x => x.NroPedido == nroPedido).FirstOrDefault();
+                Entities db = new Entities();
+                return db.Pedidos.Where(x => x.NroPedido == nroPedido).FirstOrDefault();
             }
             catch (Exception)
             {
