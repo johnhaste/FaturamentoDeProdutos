@@ -94,7 +94,7 @@ namespace Model.PN
 
             try
             {
-                return RetornaPedidos().Where(x => x.Data.Month == mes && x.Data.Year == ano).ToList();
+                return RetornaPedidos().Where(x => x.Data.Year == ano && x.Data.Month == mes).ToList();
 
             }
             catch (Exception)
@@ -103,9 +103,7 @@ namespace Model.PN
             }
 
         }
-
         
-
 
     }
 }

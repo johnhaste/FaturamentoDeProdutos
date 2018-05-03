@@ -41,12 +41,20 @@ namespace Web.Controllers
         {
             //OBJETIVO : Pegar a soma de todos os pedidos de janeiro
 
-            //Pegar todos os pedidos de janeiro
-            List<Pedido> TodosOsPedidos = pnPedidos.RetornaPedidosPorPeriodo(2018, 1);
+            double valorTotal = 0;
 
-            //Pegar todos os DetalhesPedidos de Janeiro
-            ViewBag.Total = pnPedidos.RetornaValorTotalDoPedido(1);
+            //Pegar todos os pedidos de janeiro
+            List<Pedido> pedidosJaneiro = pnPedidos.RetornaPedidosPorPeriodo(2018, 1);
+
+            //Somar todos os valores 
+            for (int i = 0; i < pedidosJaneiro.Count; i++) {
+                
+                valorTotal += pnPedidos.RetornaValorTotalDoPedido(pedidosJaneiro.ElementAt(i).NroPedido);
+
+            }
             
+            ViewBag.Total = valorTotal;
+
             //Cria a ViewModel
             vmFaturamentoTotal FaturamentoGeral = new vmFaturamentoTotal();
 
