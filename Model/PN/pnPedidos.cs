@@ -30,7 +30,7 @@ namespace Model.PN
             try
             {
                 Entities db = new Entities();
-                return db.Pedidos.Where(x => x.NroPedido == nroPedido).First();
+                return db.Pedidos.Where(x => x.NroPedido == nroPedido).FirstOrDefault();
             }
             catch (Exception)
             {
@@ -110,7 +110,6 @@ namespace Model.PN
 
             try
             {
-
                 return RetornaDetalhesPedidosPorNumero(numeroPedido).Sum(x => x.Preco);
 
             }
@@ -153,8 +152,15 @@ namespace Model.PN
             try
             {
                 Entities db = new Entities();
-                return db.Pedidos.Where(x => x.Data.Year == ano && x.Data.Month == mes).ToList();
-                
+                if (mes == 0)
+                {
+                    db.Configuration.AutoDetectChangesEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+                    return db.Pedidos.Include("DetalhesPedido").Where(x => x.Data.Year == ano).ToList();
+                }
+
+                return  db.Pedidos.Where(x => x.Data.Year == ano && x.Data.Month == mes).ToList();
+
             }
             catch (Exception)
             {

@@ -69,22 +69,73 @@ namespace Web.Controllers
             //Se for uma busca geral (não de um produto específico)
             if (produtoID == null)
             {
-
+                Entities db = new Entities();
+                int size = db.Pedidos.Include("DetalhesPedido").Where(p => p.Data.Year == (int)anoEscolhido).Count();
                 //12 meses
-                for (int i = 1; i < 2; i++)
+                db.Configuration.AutoDetectChangesEnabled = false;
+                db.Configuration.LazyLoadingEnabled = false;
+                //List<Pedido> pedidosDoAno = pnPedidos.RetornaPedidosPorPeriodo((int)anoEscolhido, 0);
+
+                for (int i = 1; i < 13; i++)
                 {
 
                     //Pegar todos os pedidos de janeiro
-                    List<Pedido> pedidosDoMes = pnPedidos.RetornaPedidosPorPeriodo((int) anoEscolhido, i);
+                    /*
+                    double valorTotal = 0;
 
-                    faturamentos.Add(new Faturamento(i)
+                    foreach(Pedido pedido in pedidosDoMes)
                     {
-                        ano = (int) anoEscolhido,
-                        mes = i,
-                        valorTotal = pnPedidos.RetornaValorTotalDeListaDePedido(pedidosDoMes)
-                    });
-                    
+                        foreach(DetalhesPedido item in pedido.DetalhesPedido)
+                        {
+                            valorTotal += item.Preco;
+                        }
+                    }
+                    */
+                    Faturamento mes_corrente = new Faturamento(i);
+                    mes_corrente.ano = (int)anoEscolhido;
+                    mes_corrente.mes = i;
+                    mes_corrente.valorTotal = 0;
+                    faturamentos.Add(mes_corrente);
                 }
+
+                int skip = 0;
+                int chunk = 25000;
+
+                while (size > 0)
+                {
+                    var pedidosChunk = (from p in db.Pedidos
+                                        join dp in db.DetalhesPedido
+                                        on p.NroPedido equals dp.NroPedido
+                                        where p.Data.Year == (int)anoEscolhido
+                                        orderby p.NroPedido ascending 
+                                        select new
+                                        {
+                                            mes = p.Data.Month,
+                                            nroPedido = p.NroPedido,
+                                            vlr_item = dp.Preco
+                                        }).Skip(skip).Take(chunk).ToList();
+                    //List<IEnumerable> nrosPedidos = db.Pedidos.Where(x => x.Data.Year == (int)anoEscolhido).OrderBy(x => x.NroPedido).Skip(skip).Take(chunk).Select(x => new { x.NroPedido, x.Data.Month});
+                    //List<Pedido> pedidosChunk = db.Pedidos.Include("DetalhesPedido").Where(x => x.Data.Year == (int)anoEscolhido).OrderBy(x => x.NroPedido).Skip(skip).Take(chunk).ToList();
+                    foreach(var pedido in pedidosChunk)
+                    {
+                        faturamentos[pedido.mes - 1].valorTotal += pedido.vlr_item;
+                    }                    
+                    size -= chunk;
+                    skip += pedidosChunk.Count();
+                    //skip += pedidosChunk.Count();
+                }
+                /*
+                List<Pedido> pedidosDoAno = db.Pedidos.Include("DetalhesPedido").Where(x => x.Data.Year == (int)anoEscolhido).ToList();
+
+                foreach (Pedido pedido in pedidosDoAno)
+                {
+                    int mes_corrente = pedido.Data.Month;
+                    foreach(DetalhesPedido item in pedido.DetalhesPedido)
+                    {
+                        faturamentos[mes_corrente - 1].valorTotal += item.Preco;
+                    }
+                }
+                */
 
                 //Passa os faturamentos para a ViewModel
                 FaturamentoGeral.Faturamentos = faturamentos;
