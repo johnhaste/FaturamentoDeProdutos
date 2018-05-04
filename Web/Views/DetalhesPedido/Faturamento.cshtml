@@ -18,7 +18,7 @@
 
 <hr />
 
-<h2> View</h2>
+<h2> @ViewBag.NomeDoProduto </h2>
 
 <hr />
 
@@ -63,4 +63,4 @@
     </table>
 </div>
 
-<a href="@Url.Action("ExportPDF", "DetalhesPedido",new {anoEscolhidoEmTela = @ViewBag.AnoEscolhido})"> Exportar PDF </a>
+<a href="@Url.Action("ExportPDF", "DetalhesPedido",new {anoEscolhidoEmTela = @ViewBag.AnoEscolhido, produtoIdNaTela = @ViewBag.ProdutoId })"> Exportar PDF </a>

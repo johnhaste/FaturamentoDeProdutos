@@ -19,10 +19,10 @@ namespace Web.Controllers
     {
         private Entities db = new Entities();
 
-        public ActionResult ExportPDF(int? anoEscolhidoEmTela)
+        public ActionResult ExportPDF(int? anoEscolhidoEmTela, Guid? produtoIdNaTela)
         {
 
-            ActionAsPdf resultado = new ActionAsPdf("Faturamento", new { anoEscolhido = anoEscolhidoEmTela })
+            ActionAsPdf resultado = new ActionAsPdf("Faturamento", new { anoEscolhido = anoEscolhidoEmTela , produtoId = produtoIdNaTela })
             {
                 FileName = Server.MapPath("~/Content/Faturamento.pdf")
             };
@@ -51,8 +51,18 @@ namespace Web.Controllers
                 anoEscolhido = DateTime.Now.Year;
             }
 
-            ViewBag.AnoEscolhido = ""+anoEscolhido;
+            //ViewBags
 
+            //Ano
+            ViewBag.AnoEscolhido = ""+anoEscolhido;
+    
+            //Nome Produto e seu ID
+            if (!String.IsNullOrEmpty(produtoID.ToString())) {
+                ViewBag.NomeDoProduto = "" + db.Produtos.Where(x => x.ProdutoID == produtoID).First().Descricao;
+                ViewBag.ProdutoId = produtoID.ToString();
+            }
+
+            
             //DropDownList de Produtos
             Produto escolhaUmProduto = new Produto();
             escolhaUmProduto.Descricao = "Escolha um produto";
