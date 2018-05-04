@@ -199,9 +199,32 @@ namespace Model.PN
 
         public static double RetornaValorDoProdutoDentroDoPedido(int nroPedido,Guid? produtoID) 
         {
+
             Entities db = new Entities();
             return db.DetalhesPedido.Where(x => x.NroPedido == nroPedido && x.ProdutoID == produtoID).First().Preco;
+
         }
-        
+
+        //Recebe lista de pedidos
+        //Retorna lista com DetalhesPedidos que possuem o mesmo produtoID na lista de pedidos
+        public static List<DetalhesPedido> RetornaDetalhesPedidoDeListaDePedidosPorProduto(List<Pedido> pedidos, Guid produtoID) {
+
+            Entities db = new Entities();
+
+            List<DetalhesPedido> detalhesPedidoLista = new List<DetalhesPedido>();
+
+            for (int i = 0; i < pedidos.Count; i++)
+            {
+                if (RetornaDetalhesPedidosPorNumero(pedidos.ElementAt(i).NroPedido).Where(x => x.ProdutoID == produtoID).FirstOrDefault() != null) {
+                    detalhesPedidoLista.Add(RetornaDetalhesPedidosPorNumero(pedidos.ElementAt(i).NroPedido).Where(x => x.ProdutoID == produtoID).FirstOrDefault());
+                }
+            }
+
+            return detalhesPedidoLista;
+
+        }
+
+
+
     }
 }

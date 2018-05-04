@@ -4,7 +4,7 @@
     ViewBag.Title = "Faturamentos Totais";
 }
 
-<h2>Faturamentos Por Período</h2>
+<h2>Faturamentos Por Período (@ViewBag.AnoEscolhido)</h2>
 
 @ViewBag.PedidosEnvolvendoOProduto
 
@@ -27,6 +27,8 @@
 <p>
     Produto Específico
     @Html.DropDownList("ProdutoID", ViewBag.ProdutosDropDown as SelectList)
+
+    @Html.Hidden("anoEscolhido", (string) ViewBag.AnoEscolhido)
     <input class="btn btn-primary" type="submit" value="Buscar por Produto" />
 </p>
 }

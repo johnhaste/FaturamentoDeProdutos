@@ -51,14 +51,13 @@ namespace Web.Controllers
                 anoEscolhido = DateTime.Now.Year;
             }
 
+            ViewBag.AnoEscolhido = ""+anoEscolhido;
+
             //DropDownList de Produtos
             Produto escolhaUmProduto = new Produto();
             escolhaUmProduto.Descricao = "Escolha um produto";
-
-
             List<Produto> produtos = pnProdutos.RetornaProdutos();
-            produtos.Insert(0, escolhaUmProduto);
-              
+            produtos.Insert(0, escolhaUmProduto);  
             ViewBag.ProdutosDropDown = new SelectList(produtos, "ProdutoID", "Descricao");
 
             //Cria a ViewModel
@@ -146,10 +145,12 @@ namespace Web.Controllers
             }//Se for a busca por um produto específico
             else {
 
+
+                /*
                 //Pegar todos os DetalhesPedido que possuem o produtoID
                 List<DetalhesPedido> detalhesPedidoDoProduto = pnPedidos.RetornaDetalhesPedidosPorProduto(produtoID);
               
-                 //Números dos pedidos que possuem o produto
+                //Números dos pedidos que possuem o produto
                 List<int> nroPedidos = new List<int>();
 
                 //Pegar todos os pedidos a partir dos DetalhesPedido
@@ -197,7 +198,38 @@ namespace Web.Controllers
                     });
 
 
+                }*/
+
+               
+                //12 meses
+                for (int i = 1; i < 12; i++)
+                {
+
+                    //Valor total por mês
+                    double valorTotalDoMes = 0;
+
+                    //Pegar todos os Pedidos por Mês e Ano
+                    List<Pedido> pedidosDoPeriodo = pnPedidos.RetornaPedidosPorPeriodo((int)anoEscolhido, i).ToList();
+
+                    //Pegar todos os Pedidos que tem um DetalhesPedidos com o produtoID
+                    List<DetalhesPedido> pedidosDoPeriodoComOProduto = pnPedidos.RetornaDetalhesPedidoDeListaDePedidosPorProduto(pedidosDoPeriodo, Guid.Parse(produtoID.ToString()));
+
+                    //Soma os lucros daquele produto específico
+                    valorTotalDoMes = pedidosDoPeriodoComOProduto.Sum(x => x.Preco);
+
+                    faturamentos.Add(new Faturamento(i)
+                    {
+                        ano = (int)anoEscolhido,
+                        mes = i,
+                        valorTotal = valorTotalDoMes
+                    });
+
+
                 }
+
+
+                //ViewBag.PedidosEnvolvendoOProduto += "|Pedidos do Período" + pedidosDoPeriodo.Count() + "|Com o produto" + pedidosDoPeriodoComOProduto.Count() + "Somando:" + pedidosDoPeriodoComOProduto.Sum(x => x.Preco);
+
 
                 FaturamentoGeral.Faturamentos = faturamentos;
 
