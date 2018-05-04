@@ -11,6 +11,7 @@ using Model.VM;
 using Model.DAO;
 using Model.PN;
 using PagedList;
+using Rotativa;
 
 namespace Web.Controllers
 {
@@ -18,23 +19,16 @@ namespace Web.Controllers
     {
         private Entities db = new Entities();
 
-        /*
-        // GET: DetalhesPedido Com Paginação
-        public ActionResult Index(int? page, int numeroPedido)
+        public ActionResult ExportPDF()
         {
-            ViewBag.Total = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido).Sum(x => x.Preco);
 
-            int pageSize = 5;
-            int pageIndex = 1;
-            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            ActionAsPdf resultado = new ActionAsPdf("Faturamento")
+            {
+                FileName = Server.MapPath("~/Content/Faturamento.pdf")
+            };
 
-            IPagedList<DetalhesPedido> detalhesPedido;
-
-            detalhesPedido = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido).ToPagedList(pageIndex, pageSize);
-           
-            return View(detalhesPedido);
+            return resultado;
         }
-        */
 
         public ActionResult DetalhesPedidoPorNumero(int numeroPedido)
         {
@@ -58,7 +52,14 @@ namespace Web.Controllers
             }
 
             //DropDownList de Produtos
-            ViewBag.ProdutosDropDown = new SelectList(pnProdutos.RetornaProdutos(), "ProdutoID", "Descricao");
+            Produto escolhaUmProduto = new Produto();
+            escolhaUmProduto.Descricao = "Escolha um produto";
+
+
+            List<Produto> produtos = pnProdutos.RetornaProdutos();
+            produtos.Insert(0, escolhaUmProduto);
+              
+            ViewBag.ProdutosDropDown = new SelectList(produtos, "ProdutoID", "Descricao");
 
             //Cria a ViewModel
             vmFaturamentoTotal FaturamentoGeral = new vmFaturamentoTotal();
