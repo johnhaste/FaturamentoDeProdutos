@@ -30,8 +30,22 @@ namespace Web.Controllers
             return resultado;
         }
 
+        public ActionResult ExportPDFDetalhesPedidoPorNumero(int? numeroPedidoEmTela)
+        {
+
+            ActionAsPdf resultado = new ActionAsPdf("DetalhesPedidoPorNumero", new { numeroPedido = numeroPedidoEmTela})
+            {
+                FileName = Server.MapPath("~/Content/DetalhesPedidoPorNumero.pdf")
+            };
+
+            return resultado;
+        }
+
         public ActionResult DetalhesPedidoPorNumero(int numeroPedido)
         {
+
+            //Número do pedido em questão
+            ViewBag.NumeroDoPedido = numeroPedido;
 
             ViewBag.Total = pnPedidos.RetornaDetalhesPedidosPorNumero(numeroPedido).Sum(x => x.Preco);
 

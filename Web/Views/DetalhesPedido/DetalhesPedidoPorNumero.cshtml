@@ -7,7 +7,7 @@
 <h2>DetalhesPedidoPorNumero</h2>
 
 <h3> Valor Total R$@ViewBag.Total </h3>
-
+<h3> Número do pedido: @ViewBag.NumeroDoPedido</h3>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -29,26 +29,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Qtde)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Preco)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pedido.NroPedido)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Produto.Descricao)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qtde)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pedido.NroPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Produto.Descricao)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+
+<a href="@Url.Action("ExportPDFDetalhesPedidoPorNumero", "DetalhesPedido",new {numeroPedidoEmTela = @ViewBag.NumeroDoPedido })"> Exportar PDF </a>
