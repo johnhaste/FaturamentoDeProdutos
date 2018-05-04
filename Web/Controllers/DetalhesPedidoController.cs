@@ -19,10 +19,10 @@ namespace Web.Controllers
     {
         private Entities db = new Entities();
 
-        public ActionResult ExportPDF()
+        public ActionResult ExportPDF(int? anoEscolhidoEmTela)
         {
 
-            ActionAsPdf resultado = new ActionAsPdf("Faturamento")
+            ActionAsPdf resultado = new ActionAsPdf("Faturamento", new { anoEscolhido = anoEscolhidoEmTela })
             {
                 FileName = Server.MapPath("~/Content/Faturamento.pdf")
             };

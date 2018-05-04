@@ -63,4 +63,4 @@
     </table>
 </div>
 
-<a href="@Url.Action("ExportPDF", "DetalhesPedido")"> Exportar PDF </a>
+<a href="@Url.Action("ExportPDF", "DetalhesPedido",new {anoEscolhidoEmTela = @ViewBag.AnoEscolhido})"> Exportar PDF </a>

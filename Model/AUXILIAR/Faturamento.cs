@@ -21,7 +21,7 @@ namespace Model.AUXILIAR
             "Junho",
             "Julho",
             "Agosto",
-            "Setembro,",
+            "Setembro",
             "Outubro",
             "Novembro",
             "Dezembro"
