@@ -95,21 +95,30 @@ namespace Web.Controllers
                 }
 
                 int skip = 0;
-                int chunk = 10000;
+                int chunk = 25000;
 
                 while (size > 0)
                 {
-                    List<Pedido> pedidosChunk = db.Pedidos.Include("DetalhesPedido").Where(x => x.Data.Year == (int)anoEscolhido).OrderBy(x => x.NroPedido).Skip(skip).Take(chunk).ToList();
-                    foreach(Pedido pedido in pedidosChunk)
+                    var pedidosChunk = (from p in db.Pedidos
+                                        join dp in db.DetalhesPedido
+                                        on p.NroPedido equals dp.NroPedido
+                                        where p.Data.Year == (int)anoEscolhido
+                                        orderby p.NroPedido ascending 
+                                        select new
+                                        {
+                                            mes = p.Data.Month,
+                                            nroPedido = p.NroPedido,
+                                            vlr_item = dp.Preco
+                                        }).Skip(skip).Take(chunk).ToList();
+                    //List<IEnumerable> nrosPedidos = db.Pedidos.Where(x => x.Data.Year == (int)anoEscolhido).OrderBy(x => x.NroPedido).Skip(skip).Take(chunk).Select(x => new { x.NroPedido, x.Data.Month});
+                    //List<Pedido> pedidosChunk = db.Pedidos.Include("DetalhesPedido").Where(x => x.Data.Year == (int)anoEscolhido).OrderBy(x => x.NroPedido).Skip(skip).Take(chunk).ToList();
+                    foreach(var pedido in pedidosChunk)
                     {
-                        int mes_corrente = pedido.Data.Month;
-                        foreach (DetalhesPedido item in pedido.DetalhesPedido.ToList())
-                        {
-                            faturamentos[mes_corrente - 1].valorTotal += item.Preco;
-                        }
-                    }
+                        faturamentos[pedido.mes - 1].valorTotal += pedido.vlr_item;
+                    }                    
                     size -= chunk;
                     skip += pedidosChunk.Count();
+                    //skip += pedidosChunk.Count();
                 }
                 /*
                 List<Pedido> pedidosDoAno = db.Pedidos.Include("DetalhesPedido").Where(x => x.Data.Year == (int)anoEscolhido).ToList();
