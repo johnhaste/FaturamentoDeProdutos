@@ -3,6 +3,33 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
+
+    var anosList = new SelectList(
+       new List<SelectListItem>
+       {
+            new SelectListItem {Text = "2014", Value = "2014"},
+            new SelectListItem {Text = "2015", Value = "2015"},
+            new SelectListItem {Text = "2016", Value = "2016"},
+            new SelectListItem {Text = "2017", Value = "2017"},
+            new SelectListItem {Text = "2018", Value = "2018"},
+       }, "Value", "Text");
+
+    var mesList = new SelectList(
+      new List<SelectListItem>
+      {
+            new SelectListItem {Text = "Janeiro", Value = "1"},
+            new SelectListItem {Text = "Fevereiro", Value = "2"},
+            new SelectListItem {Text = "Março", Value = "3"},
+            new SelectListItem {Text = "Abril", Value = "4"},
+            new SelectListItem {Text = "Maio", Value = "5"},
+            new SelectListItem {Text = "Junho", Value = "6"},
+            new SelectListItem {Text = "Julho", Value = "7"},
+            new SelectListItem {Text = "Agosto", Value = "8"},
+            new SelectListItem {Text = "Setembro", Value = "9"},
+            new SelectListItem {Text = "Outubro", Value = "10"},
+            new SelectListItem {Text = "Novembro", Value = "11"},
+            new SelectListItem {Text = "Dezembro", Value = "12"},
+      }, "Value", "Text");
 }
 
 <h2>Index</h2>
@@ -10,6 +37,23 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Pedidos", FormMethod.Get))
+{
+<p>
+    Ano
+    @Html.DropDownList("ano", anosList, "Escolha um Ano", new { @class = "css-class" })
+
+    Mês
+    @Html.DropDownList("mes", mesList, "Escolha um Mês", new { @class = "css-class" })
+
+
+    @Html.Hidden("clienteID", (string) ViewBag.ClienteId)
+
+    <input class="btn btn-primary" type="submit" value="Buscar por Produto" />
+</p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -34,9 +78,7 @@
                 @Html.DisplayFor(modelItem => item.Cliente.Nome)
             </td>
             <td>
-                <a href="@Url.Action("Index", "DetalhesPedido", new { numeroPedido = item.NroPedido })" class="btn btn-primary">Pedidos &nbsp;<span class="glyphicon glyphicon-gift"></span></a> |
                 <a href="@Url.Action("DetalhesPedidoPorNumero", "DetalhesPedido", new { numeroPedido = item.NroPedido })" class="btn btn-primary"> Detalhes &nbsp;<span class="glyphicon glyphicon-gift"></span></a> |
-
                 @Html.ActionLink("Edit", "Edit", new { id = item.NroPedido }) |
                 @Html.ActionLink("Details", "Details", new { id = item.NroPedido }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.NroPedido })

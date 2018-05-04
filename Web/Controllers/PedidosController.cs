@@ -26,18 +26,39 @@ namespace Web.Controllers
         */
 
         //Clientes e busca
-        public ActionResult Index(int? page, Guid? clienteID)
+        public ActionResult Index(int? page, Guid? clienteID, int? mes, int? ano)
         {
+            ViewBag.ClienteId = clienteID.ToString();
+            
             int pageSize = 5;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
             IPagedList<Pedido> pedidos;
-
-            //Verifica se um texto foi buscado
+            
+            //Verifica se um cliente foi buscado
             if (clienteID.HasValue)
             {
                 pedidos = pnPedidos.RetornaPedidosDoCliente(clienteID.Value).ToPagedList(pageIndex, pageSize);
+
+                //Se algum ano foi escolhido
+                if (ano > 0)
+                {
+
+                    //Se escolheu ano e mês
+                    if (mes > 0)
+                    {
+                        pedidos = pedidos.Where(x => x.Data.Month == mes && x.Data.Year == ano).ToList().ToPagedList(pageIndex, pageSize);
+
+                    }//Se escolheu apenas ano
+                    else
+                    {
+                        pedidos = pedidos.Where(x => x.Data.Year == ano).ToList().ToPagedList(pageIndex, pageSize);
+
+                    }
+                    
+                }
+
                 return View(pedidos);
             }
 
