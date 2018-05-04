@@ -59,6 +59,8 @@ namespace Web.Controllers
                     
                 }
 
+                ViewBag.Total = pnPedidos.RetornaValorTotalDeListaDePedido(pedidos.ToList());
+
                 return View(pedidos);
             }
 
