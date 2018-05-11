@@ -4,6 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Rotativa;
+using Model.VM;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
+
 
 namespace Web.Controllers
 {
@@ -24,10 +29,50 @@ namespace Web.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+
+            ViewBag.Title = "Contato";
 
             return View();
         }
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Contact(vmFormularioEmail model)
+        //public ActionResult Contact(vmFormularioEmail model)
+        {
+            if (ModelState.IsValid)
+            {
+                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress("joaovictorspteixeira@gmail.com"));  // Destinatário 
+                message.From = new MailAddress("joaovictorspteixeira@gmail.com");  // Remetente
+                message.Subject = "Suporte do Site Faturator 5000";
+                message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "quetesaopia@gmail.com",  // Seu E-mail
+                        Password = "80320050"  // Sua Senha
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(message);
+                    return RedirectToAction("Sent");
+                }
+            }
+            return View(model);
+        }
+
+        public ActionResult Sent()
+        {
+            return View();
+        }
+
+
     }
 }
